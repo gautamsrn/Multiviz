@@ -1,0 +1,44 @@
+name: ROS 2 Testing
+
+on: [push, pull_request]
+
+jobs:
+  ros2-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+        ros-distro: [humble, iron, rolling]
+        exclude:
+          - os: ubuntu-22.04
+            ros-distro: iron
+          - os: ubuntu-24.04
+            ros-distro: humble
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up ROS 2
+      uses: ros-tooling/setup-ros@v0.7
+      with:
+        required-ros-distributions: ${{ matrix.ros-distro }}
+        vcs-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip xvfb
+        pip install pyttsx3 SpeechRecognition
+        
+    - name: Build workspace
+      run: |
+        source /opt/ros/${{ matrix.ros-distro }}/setup.bash
+        colcon build --packages-up-to robot_monitor_ui
+
+    - name: Run tests with Xvfb
+      uses: GabrielBB/xvfb-action@v1
+      with:
+        run: |
+          source /opt/ros/${{ matrix.ros-distro }}/setup.bash
+          colcon test
+          colcon test-result --verbose
