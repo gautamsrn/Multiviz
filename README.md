@@ -7,7 +7,6 @@ A ROS2-based, user-friendly GUI for multi-robot monitoring and management.
 | Platform       | Version       | Status |
 |----------------|---------------|--------|
 | **Linux**      | Ubuntu 22.04  | [![Linux Build](https://github.com/gautamsrn/Multiviz/actions/workflows/linux.yaml/badge.svg)](https://github.com/gautamsrn/Multiviz/actions) |
-| **Windows**    | Windows 2022  | [![Windows Build](https://github.com/gautamsrn/Multiviz/actions/workflows/windows.yaml/badge.svg)](https://github.com/gautamsrn/Multiviz/actions) |
 
 
 | ROS Version    | Distribution  | Status |
