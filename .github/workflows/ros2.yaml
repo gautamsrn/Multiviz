@@ -28,7 +28,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y python3-pip xvfb
-        pip install pyttsx3 SpeechRecognition
+        pip install -r requirements.txt
         
     - name: Build workspace
       run: |
